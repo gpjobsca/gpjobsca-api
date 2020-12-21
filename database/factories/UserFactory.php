@@ -24,6 +24,8 @@ class UserFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
+            'company_name' => $this->faker->company,
+            'company_location' => $this->faker->randomElement(['City of Grande Prairie, County of Grande Prairie, MD of Greenview No 16']),
             'email' => $this->faker->unique()->safeEmail,
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
