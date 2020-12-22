@@ -24,7 +24,7 @@ class JobFactory extends Factory
         return [
             'user_id' => 1,
             'title' => $this->faker->jobTitle,
-            'description' => $this->faker->htmlLorem(),
+            'description' => $this->faker->randomHtml(),
             'apply_link' => $this->faker->url(),
             'expired_at' => now()->addDays(30)
         ];

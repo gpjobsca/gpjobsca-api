@@ -19,7 +19,7 @@ class CreateJobsTable extends Migration
             $table->string('title');
             $table->longText('description');
             $table->string('apply_link', 2083);
-            $table->timestamp('expired_at');
+            $table->timestampTz('expired_at');
             $table->timestamps();
             $table->softDeletes();
         });
