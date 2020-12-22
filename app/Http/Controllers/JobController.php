@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Job;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class JobController extends Controller
@@ -26,7 +27,15 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = User::find($request->user_id);
+        $job = new Job;
+        $job->title = $request->title;
+        $job->description = $request->description;
+        $job->apply_link = $request->apply_link;
+        $job->expired_at = now()->addDays(30);
+        $job->user()->associate($user);
+        $job->save();
+        return $this->response($job);
     }
 
     /**
@@ -50,7 +59,13 @@ class JobController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $job = Job::findOrFail($id);
+        $job->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'apply_link' => $request->apply_link
+        ]);
+        return $this->response($job);
     }
 
     /**
@@ -61,6 +76,11 @@ class JobController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $job = Job::findOrFail($id);
+        $job->delete();
+        return [
+            "code" => 200,
+            "message" => "Job ${id} deleted"
+        ];
     }
 }

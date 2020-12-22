@@ -12,6 +12,26 @@ class Job extends Model
     use HasFactory, SoftDeletes;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'title',
+        'description',
+        'apply_link'
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'expired_at' => 'datetime',
+    ];
+
+    /**
      * Get the owner of this job listing
      */
     public function user()
