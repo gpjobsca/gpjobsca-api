@@ -15,6 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function () {
+    return [
+        'link' => env('APP_URL', null),
+        'version' => 1
+    ];
+});
+
 Route::apiResource('jobs', JobController::class)->only(['index', 'show']);
 
 // This route needs to be protected
