@@ -18,7 +18,9 @@ use Illuminate\Support\Facades\Route;
 Route::apiResource('jobs', JobController::class)->only(['index', 'show']);
 
 // This route needs to be protected
-Route::apiResource('jobs', JobController::class)->only(['store', 'update', 'destroy']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('jobs', JobController::class)->only(['store', 'update', 'destroy']);
+});
 
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
