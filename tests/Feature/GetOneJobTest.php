@@ -16,7 +16,7 @@ class GetOneJobTest extends TestCase
      *
      * @return void
      */
-    public function testExample()
+    public function testCanGetOneJob()
     {
         // Arrange
         $user = User::factory()->create();

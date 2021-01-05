@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class JobTest extends TestCase
+class GetAllJobsTest extends TestCase
 {
     use DatabaseMigrations;
 
@@ -17,7 +17,7 @@ class JobTest extends TestCase
      *
      * @return void
      */
-    public function test_assert_all_jobs_can_be_retrieved()
+    public function testAssertAllJobsCanBeRetrieved()
     {
         $user = User::factory()->create();
 
