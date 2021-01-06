@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\JobController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\JobController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return [
         'link' => env('APP_URL', null),
-        'version' => 1
+        'version' => 1.0
     ];
 });
 
@@ -26,10 +27,6 @@ Route::apiResource('jobs', JobController::class)->only(['index', 'show']);
 
 // This route needs to be protected
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('user', [UserController::class, 'getAuthenticatedUser']);
     Route::apiResource('jobs', JobController::class)->only(['store', 'update', 'destroy']);
 });
-
-
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
