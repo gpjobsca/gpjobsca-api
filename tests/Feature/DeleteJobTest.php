@@ -2,31 +2,33 @@
 
 namespace Tests\Feature;
 
-use App\Models\Job;
 use Tests\TestCase;
+use App\Models\Job;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
 
-class GetOneJobTest extends TestCase
+class DeleteJobTest extends TestCase
 {
     use DatabaseMigrations;
+
     /**
-     * Can get one job
+     * Test a job can be deleted.
      *
      * @return void
      */
-    public function testCanGetOneJob()
+    public function testDeleteJobTest()
     {
-        // Arrange
         $user = User::factory()->create();
-        $job = Job::factory()->for($user)->create();
+        $job = Job::factory()
+            ->for($user)
+            ->create();
 
-        // Act
-        $response = $this->get('/jobs/1');
+        $this->actingAs($user);
 
-        // Assert
+        $response = $this->deleteJson('/jobs/1');
+
         $response->assertStatus(200);
-        $response->assertJsonPath('data.id', $job->id);
+        $this->assertSoftDeleted($job);
     }
 }

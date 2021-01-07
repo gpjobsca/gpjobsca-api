@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Job;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class JobController extends Controller
 {
@@ -27,13 +28,12 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::find($request->user_id);
         $job = new Job;
         $job->title = $request->title;
         $job->description = $request->description;
         $job->apply_link = $request->apply_link;
         $job->expired_at = now()->addDays(30);
-        $job->user()->associate($user);
+        $job->user()->associate(Auth::id());
         $job->save();
         return $this->response($job);
     }
@@ -77,10 +77,12 @@ class JobController extends Controller
     public function destroy($id)
     {
         $job = Job::findOrFail($id);
+
+        if (Auth::id() !== $job->user_id) {
+            abort(403, 'Access denied');
+        }
+
         $job->delete();
-        return [
-            "code" => 200,
-            "message" => "Job ${id} deleted"
-        ];
+        return response('', 200);
     }
 }

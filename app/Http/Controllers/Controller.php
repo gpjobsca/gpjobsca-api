@@ -15,16 +15,8 @@ class Controller extends BaseController
     /**
      * Format responses into the correct JSON structure
      */
-    public function response($data)
+    public function response($data, ...$args)
     {
-        $json = ['data' => $data];
-        if ($data instanceof Collection) {
-            $json = array_merge($json, [
-                'meta' => [
-                    'total' => $data->count()
-                ]
-            ]);
-        }
-        return response($json);
+        return response(['data' => $data], ...$args);
     }
 }
