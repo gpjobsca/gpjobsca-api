@@ -6,6 +6,7 @@ use App\Models\Job;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class JobController extends Controller
 {
@@ -28,6 +29,8 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate($this->jobValidationRules());
+
         $job = new Job;
         $job->title = $request->title;
         $job->description = $request->description;
@@ -60,8 +63,8 @@ class JobController extends Controller
     public function update(Request $request, $id)
     {
         $job = Job::findOrFail($id);
-
         $this->confirmOwnership($job);
+        $request->validate($this->jobValidationRules());
 
         $job->update([
             'title' => $request->title,
@@ -98,5 +101,19 @@ class JobController extends Controller
         if (Auth::id() !== $job->user_id) {
             abort(403, 'Cannot alter another user\'s job.');
         }
+    }
+
+    /**
+    * Get the validation rules used to validate jobs.
+    *
+    * @return array
+    */
+    private function jobValidationRules()
+    {
+        return [
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string'],
+            'apply_link' => ['required', 'url']
+        ];
     }
 }
