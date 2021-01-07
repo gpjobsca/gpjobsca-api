@@ -60,6 +60,9 @@ class JobController extends Controller
     public function update(Request $request, $id)
     {
         $job = Job::findOrFail($id);
+
+        $this->confirmOwnership($job);
+
         $job->update([
             'title' => $request->title,
             'description' => $request->description,
@@ -78,11 +81,22 @@ class JobController extends Controller
     {
         $job = Job::findOrFail($id);
 
-        if (Auth::id() !== $job->user_id) {
-            abort(403, 'Access denied');
-        }
+        $this->confirmOwnership($job);
 
         $job->delete();
         return response('', 200);
+    }
+
+    /**
+     * Confirm the passed in job is owned by the authenticated user
+     *
+     * @param \App\Models\Job
+     * @return void
+     */
+    private function confirmOwnership(Job $job)
+    {
+        if (Auth::id() !== $job->user_id) {
+            abort(403, 'Cannot alter another user\'s job.');
+        }
     }
 }
