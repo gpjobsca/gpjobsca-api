@@ -3,10 +3,11 @@
 namespace Tests\Feature;
 
 use App\Models\Job;
-use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Models\User;
+use Laravel\Sanctum\Sanctum;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class EditJobTest extends TestCase
 {
@@ -53,7 +54,7 @@ class EditJobTest extends TestCase
     {
         $user = User::factory()->create();
         $job = Job::factory()->for($user)->create();
-        $this->actingAs($user);
+        Sanctum::actingAs($user);
 
         $response = $this->put(
             "/jobs/$job->id",

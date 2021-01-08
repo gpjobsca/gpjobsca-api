@@ -2,11 +2,12 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
 use App\Models\Job;
+use Tests\TestCase;
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Laravel\Sanctum\Sanctum;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class DeleteJobTest extends TestCase
 {
@@ -35,7 +36,7 @@ class DeleteJobTest extends TestCase
             ->for($user)
             ->create();
 
-        $this->actingAs($user);
+        Sanctum::actingAs($user);
 
         $response = $this->deleteJson('/jobs/1');
 
@@ -56,11 +57,11 @@ class DeleteJobTest extends TestCase
             ->for($user)
             ->create();
 
-        $this->actingAs($user2);
+        Sanctum::actingAs($user2);
 
         $response = $this->deleteJson('/jobs/1');
 
         $response->assertStatus(403);
-        $this->assertDatabaseHas('jobs', $job->toArray());
+        $this->assertDatabaseHas('jobs', ['id' => $job->id]);
     }
 }
