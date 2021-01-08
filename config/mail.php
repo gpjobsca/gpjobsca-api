@@ -107,6 +107,6 @@ return [
         ],
     ],
 
-    'notification_logo' => env('NOTIFICATION_LOGO', url('/notification-logo.png')),
+    'notification_logo' => env('NOTIFICATION_LOGO', 'https://api.gpjobs.ca/notification-logo.png'),
 
 ];
