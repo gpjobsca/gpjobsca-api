@@ -107,4 +107,6 @@ return [
         ],
     ],
 
+    'notification_logo' => env('NOTIFICATION_LOGO', url('/notification-logo.png')),
+
 ];
