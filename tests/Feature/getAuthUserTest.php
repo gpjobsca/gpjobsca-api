@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class getAuthUserTest extends TestCase
+class GetAuthUserTest extends TestCase
 {
     use DatabaseMigrations;
 
