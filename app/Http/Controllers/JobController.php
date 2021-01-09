@@ -63,7 +63,7 @@ class JobController extends Controller
     public function update(Request $request, $id)
     {
         $job = Job::findOrFail($id);
-        $this->confirmOwnership($job);
+        $this->confirmOwnership(Auth::user(), $job);
         $request->validate($this->jobValidationRules());
 
         $job->update([
@@ -84,7 +84,7 @@ class JobController extends Controller
     {
         $job = Job::findOrFail($id);
 
-        $this->confirmOwnership($job);
+        $this->confirmOwnership(Auth::user(), $job);
 
         $job->delete();
         return response('', 200);
@@ -93,12 +93,13 @@ class JobController extends Controller
     /**
      * Confirm the passed in job is owned by the authenticated user
      *
+     * @param \App\Models\User
      * @param \App\Models\Job
      * @return void
      */
-    private function confirmOwnership(Job $job)
+    private function confirmOwnership(User $user, Job $job)
     {
-        if (Auth::id() !== $job->user_id) {
+        if ($user->id !== $job->user_id) {
             abort(403, 'Cannot alter another user\'s job.');
         }
     }

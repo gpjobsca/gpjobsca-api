@@ -40,7 +40,7 @@ class EditJobTest extends TestCase
         $job2 = Job::factory()->for($user2)->create();
         $this->actingAs($user);
 
-        $response = $this->put("/jobs/$job2->id", $job2->toArray());
+        $response = $this->putJson("/jobs/$job2->id", $job2->toArray());
 
         $response->assertStatus(403);
     }
@@ -56,7 +56,7 @@ class EditJobTest extends TestCase
         $job = Job::factory()->for($user)->create();
         Sanctum::actingAs($user);
 
-        $response = $this->put(
+        $response = $this->putJson(
             "/jobs/$job->id",
             array_merge(
                 ["title" => "New Title"],
