@@ -15,10 +15,6 @@ jobs:
       with:
         php-version: '8.0'
     - uses: actions/checkout@v2
-    - name: Copy .env
-      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
-    - name: Generate key
-      run: php artisan key:generate
     - name: Cache composer dependencies
       uses: actions/cache@v2
       with:
@@ -28,12 +24,16 @@ jobs:
       run: composer install -n --prefer-dist
       env:
         APP_ENV: testing
+    - name: Copy .env
+      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+    - name: Generate key
+      run: php artisan key:generate
     - name: Directory Permissions
       run: chmod -R 777 storage bootstrap/cache
     - name: Run Tests
-      env:
-        DB_CONNECTION: testing
       run: vendor/bin/phpunit
+      env:
+        APP_ENV: testing
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
       if: failure()
