@@ -36,7 +36,11 @@ class Handler extends ExceptionHandler
     {
         $this->renderable(function (HttpException $e, $request) {
             return response([
-                'message' => $e->getMessage()
+                'message' => 'HTTP error',
+                'errors' => [
+                    'message' => $e->getMessage(),
+                    'status_code' => $e->getStatusCode()
+                ]
             ], $e->getStatusCode());
         });
 
