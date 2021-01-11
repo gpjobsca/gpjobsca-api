@@ -99,7 +99,7 @@ class JobController extends Controller
      */
     private function confirmOwnership(User $user, Job $job)
     {
-        if ($user->id !== $job->user_id) {
+        if ($user->id != $job->user_id) {
             abort(403, 'Cannot alter another user\'s job.');
         }
     }

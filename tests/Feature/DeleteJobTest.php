@@ -36,7 +36,7 @@ class DeleteJobTest extends TestCase
             ->for($user)
             ->create();
 
-        Sanctum::actingAs($user);
+        $this->actingAs($user);
 
         $response = $this->deleteJson('/jobs/1');
 

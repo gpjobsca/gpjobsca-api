@@ -54,7 +54,7 @@ class EditJobTest extends TestCase
     {
         $user = User::factory()->create();
         $job = Job::factory()->for($user)->create();
-        Sanctum::actingAs($user);
+        $this->actingAs($user);
 
         $response = $this->putJson(
             "/jobs/$job->id",
