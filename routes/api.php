@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserJobsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,4 +30,5 @@ Route::apiResource('jobs', JobController::class)->only(['index', 'show']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('user', [UserController::class, 'getAuthenticatedUser']);
     Route::apiResource('jobs', JobController::class)->only(['store', 'update', 'destroy']);
+    Route::apiResource('user/{id}/jobs', UserJobsController::class)->only(['index']);
 });
