@@ -38,7 +38,7 @@ class DeleteJobTest extends TestCase
 
         $this->actingAs($user);
 
-        $response = $this->deleteJson('/jobs/1');
+        $response = $this->deleteJson("/jobs/$job->id");
 
         $response->assertStatus(200);
         $this->assertSoftDeleted($job);

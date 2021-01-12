@@ -19,7 +19,7 @@ class JobController extends Controller
     public function index()
     {
         $jobs = Job::where('expired_at', '>', now())->with('user')->get();
-        return $this->response($jobs);
+        return JobResource::collection($jobs);
     }
 
     /**
@@ -88,7 +88,7 @@ class JobController extends Controller
         $this->confirmOwnership(Auth::user(), $job);
 
         $job->delete();
-        return response();
+        return response('', 200);
     }
 
     /**

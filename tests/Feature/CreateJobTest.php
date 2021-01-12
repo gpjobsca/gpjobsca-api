@@ -46,7 +46,7 @@ class CreateJobTest extends TestCase
         ]);
 
         // Assert
-        $response->assertStatus(200);
+        $response->assertStatus(201);
         $this->assertDatabaseHas('jobs', [
             'title' => 'Create Job Test Job Title'
         ]);
