@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\JobResource;
 use App\Models\Job;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -50,7 +51,7 @@ class JobController extends Controller
     public function show($id)
     {
         $job = Job::with('user')->findOrFail($id);
-        return $this->response($job);
+        return new JobResource($job);
     }
 
     /**
