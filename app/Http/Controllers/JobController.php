@@ -88,7 +88,7 @@ class JobController extends Controller
         $this->confirmOwnership(Auth::user(), $job);
 
         $job->delete();
-        return response('', 200);
+        return response();
     }
 
     /**
