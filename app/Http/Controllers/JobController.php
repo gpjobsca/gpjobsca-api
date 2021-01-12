@@ -39,7 +39,7 @@ class JobController extends Controller
         $job->expired_at = now()->addDays(30);
         $job->user()->associate(Auth::id());
         $job->save();
-        return $this->response($job);
+        return new JobResource($job);
     }
 
     /**
@@ -72,7 +72,7 @@ class JobController extends Controller
             'description' => $request->description,
             'apply_link' => $request->apply_link
         ]);
-        return $this->response($job);
+        return new JobResource($job);
     }
 
     /**
