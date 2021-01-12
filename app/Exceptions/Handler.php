@@ -38,7 +38,7 @@ class Handler extends ExceptionHandler
             return response([
                 'message' => 'HTTP error',
                 'errors' => [
-                    'message' => $e->getMessage(),
+                    'message' => $e->getStatusCode() == 404 ? 'Not Found' : $e->getMessage(),
                     'status_code' => $e->getStatusCode()
                 ]
             ], $e->getStatusCode());

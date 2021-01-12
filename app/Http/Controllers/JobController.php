@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\JobResource;
 use App\Models\Job;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class JobController extends Controller
     public function index()
     {
         $jobs = Job::where('expired_at', '>', now())->with('user')->get();
-        return $this->response($jobs);
+        return JobResource::collection($jobs);
     }
 
     /**
@@ -38,7 +39,7 @@ class JobController extends Controller
         $job->expired_at = now()->addDays(30);
         $job->user()->associate(Auth::id());
         $job->save();
-        return $this->response($job);
+        return new JobResource($job);
     }
 
     /**
@@ -50,7 +51,7 @@ class JobController extends Controller
     public function show($id)
     {
         $job = Job::with('user')->findOrFail($id);
-        return $this->response($job);
+        return new JobResource($job);
     }
 
     /**
@@ -71,7 +72,7 @@ class JobController extends Controller
             'description' => $request->description,
             'apply_link' => $request->apply_link
         ]);
-        return $this->response($job);
+        return new JobResource($job);
     }
 
     /**

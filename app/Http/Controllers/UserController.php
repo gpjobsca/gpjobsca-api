@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,6 +16,7 @@ class UserController extends Controller
      */
     public function getAuthenticatedUser()
     {
-        return response(Auth::user(), 200);
+        //return response(Auth::user(), 200);
+        return new UserResource(Auth::user());
     }
 }

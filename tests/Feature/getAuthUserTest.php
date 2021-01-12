@@ -36,6 +36,6 @@ class GetAuthUserTest extends TestCase
         $response = $this->get('/user');
 
         $response->assertStatus(200);
-        $response->assertJson($user->toArray());
+        $response->assertJson(['data' => ['name' => $user->name, 'email' => $user->email]]);
     }
 }
